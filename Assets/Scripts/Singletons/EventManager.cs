@@ -28,7 +28,7 @@ public class EventManager : MonoBehaviour
     List<UnityAction<int>> _updateLivesListeners;
 
     List<Player> _gameOverInvokers;
-    List<UnityAction> _gameOverListeners;
+    List<UnityAction<bool>> _gameOverListeners;
 
     private void Start()
     {
@@ -39,7 +39,7 @@ public class EventManager : MonoBehaviour
         _updateLivesListeners = new List<UnityAction<int>>();
 
         _gameOverInvokers = new List<Player>();
-        _gameOverListeners = new List<UnityAction>();
+        _gameOverListeners = new List<UnityAction<bool>>();
     }
 
     #region Points Added Event
@@ -121,13 +121,13 @@ public class EventManager : MonoBehaviour
     public void AddGameOverEventInvoker(Player invoker)
     {
         _gameOverInvokers.Add(invoker);
-        foreach(UnityAction listener in _gameOverListeners)
+        foreach(UnityAction<bool> listener in _gameOverListeners)
         {
             invoker.AddGameOverEventListener(listener);
         }
     }
 
-    public void AddGameOverEventListener(UnityAction listener)
+    public void AddGameOverEventListener(UnityAction<bool> listener)
     {
         _gameOverListeners.Add(listener);
         foreach(Player invoker in _gameOverInvokers)
@@ -139,13 +139,13 @@ public class EventManager : MonoBehaviour
     public void RemoveGameOverEventInvoker(Player invoker)
     {
         _gameOverInvokers.Remove(invoker);
-        foreach(UnityAction listener in _gameOverListeners)
+        foreach(UnityAction<bool> listener in _gameOverListeners)
         {
             invoker.RemoveGameOverEventListener(listener);
         }
     }
 
-    public void RemoveGameOverEventListener(UnityAction listener)
+    public void RemoveGameOverEventListener(UnityAction<bool> listener)
     {
         _gameOverListeners.Remove(listener);
         foreach(Player invoker in _gameOverInvokers)

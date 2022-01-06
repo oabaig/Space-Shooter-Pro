@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
 
             _EventManager.RemoveUpdateLivesInvoker(this);
 
-            _GameOverEvent.Invoke();
+            _GameOverEvent.Invoke(true);
 
             Destroy(gameObject);
         }
@@ -192,12 +192,12 @@ public class Player : MonoBehaviour
 
     #region Game Over Event
 
-    public void AddGameOverEventListener(UnityAction listener)
+    public void AddGameOverEventListener(UnityAction<bool> listener)
     {
         _GameOverEvent.AddListener(listener);
     }
 
-    public void RemoveGameOverEventListener(UnityAction listener)
+    public void RemoveGameOverEventListener(UnityAction<bool> listener)
     {
         _GameOverEvent.RemoveListener(listener);
     }

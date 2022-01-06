@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameOverEvent : UnityEvent
+public class GameOverEvent : UnityEvent<bool>
 {
 }
