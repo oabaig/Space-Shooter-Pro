@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
 
     // Singletons
     private SpawnManager _SpawnManager;
+    private EventManager _EventManager;
+
+    // Events
+    private UpdateLivesEvent _UpdateLivesEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -40,10 +44,14 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
 
         _SpawnManager = SpawnManager.instance;
+        _EventManager = EventManager.instance;
 
         _canFireTripleShot = false;
         _speedBoostMultiplier = 1;
         _isShieldActive = false;
+
+        _UpdateLivesEvent = new UpdateLivesEvent();
+        _EventManager.AddUpdateLivesInvoker(this);
     }
 
     // Update is called once per frame
@@ -110,11 +118,15 @@ public class Player : MonoBehaviour
             _playerShields.SetActive(false);
             return;
         }
+
         _numberLives--;
+        _UpdateLivesEvent.Invoke(_numberLives);
 
         if(_numberLives < 1)
         {
             _SpawnManager.OnPlayerDeath();
+
+            _EventManager.RemoveUpdateLivesInvoker(this);
 
             Destroy(gameObject);
         }
@@ -155,5 +167,16 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(_speedBoostActiveTime);
         _speedBoostMultiplier = 1;
+    }
+
+    // events
+    public void AddUpdateLivesEventListener(UnityAction<int> listener)
+    {
+        _UpdateLivesEvent.AddListener(listener);
+    }
+
+    public void RemoveUpdateLivesEventListener(UnityAction<int> listener)
+    {
+        _UpdateLivesEvent.RemoveListener(listener);
     }
 }
