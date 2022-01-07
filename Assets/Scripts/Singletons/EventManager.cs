@@ -11,7 +11,7 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Debug.LogWarning("More than one instance of " + gameObject.name + " found!");
             return;

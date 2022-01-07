@@ -20,11 +20,13 @@ public class UIManager : MonoBehaviour
 
     // Singletons
     private EventManager _EventManager;
+    private GameMaster _GameMaster;
 
     // Start is called before the first frame update
     private void Start()
     {
         _EventManager = EventManager.instance;
+        _GameMaster = GameMaster.instance;
 
         _isGameOver = false;
         _currentScore = 0;
@@ -32,7 +34,6 @@ public class UIManager : MonoBehaviour
 
         _EventManager.AddPointsAddedListener(UpdateScoreText);
         _EventManager.AddUpdateLivesListener(UpdateNumberLivesDisplay);
-
     }
 
     private void UpdateScoreText(int score)
@@ -57,6 +58,8 @@ public class UIManager : MonoBehaviour
         {
             _isGameOver = true;
             EnableGameOverDisplay(_isGameOver);
+
+            _GameMaster.SetIsGameOver(_isGameOver);
         }
     }
 
