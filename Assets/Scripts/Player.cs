@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
 
     // Events
     private UpdateLivesEvent _UpdateLivesEvent;
-    private GameOverEvent _GameOverEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -52,11 +51,8 @@ public class Player : MonoBehaviour
         _isShieldActive = false;
 
         _UpdateLivesEvent = new UpdateLivesEvent();
-        _GameOverEvent = new GameOverEvent();
-
 
         _EventManager.AddUpdateLivesInvoker(this);
-        _EventManager.AddGameOverEventInvoker(this);
     }
 
     // Update is called once per frame
@@ -133,8 +129,6 @@ public class Player : MonoBehaviour
 
             _EventManager.RemoveUpdateLivesInvoker(this);
 
-            _GameOverEvent.Invoke(true);
-
             Destroy(gameObject);
         }
     }
@@ -188,20 +182,6 @@ public class Player : MonoBehaviour
     {
         _UpdateLivesEvent.RemoveListener(listener);
     }
-    #endregion
-
-    #region Game Over Event
-
-    public void AddGameOverEventListener(UnityAction<bool> listener)
-    {
-        _GameOverEvent.AddListener(listener);
-    }
-
-    public void RemoveGameOverEventListener(UnityAction<bool> listener)
-    {
-        _GameOverEvent.RemoveListener(listener);
-    }
-
     #endregion
 
     #endregion

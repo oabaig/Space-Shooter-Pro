@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 136374704}
   - component: {fileID: 136374706}
   - component: {fileID: 136374705}
-  - component: {fileID: 136374707}
   m_Layer: 5
   m_Name: Game_Over_Text
   m_TagString: Untagged
@@ -255,18 +254,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136374703}
   m_CullTransparentMesh: 0
---- !u!114 &136374707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136374703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25822f360d9d0cf49ac745cddbadad4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &330262841
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +265,6 @@ GameObject:
   - component: {fileID: 330262842}
   - component: {fileID: 330262844}
   - component: {fileID: 330262843}
-  - component: {fileID: 330262845}
   m_Layer: 5
   m_Name: Score_Text
   m_TagString: Untagged
@@ -401,18 +387,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330262841}
   m_CullTransparentMesh: 0
---- !u!114 &330262845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330262841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc5d23d8fe3efd347b87f85588346833, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &747209150
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +640,7 @@ GameObject:
   - component: {fileID: 1609920264}
   - component: {fileID: 1609920263}
   - component: {fileID: 1609920262}
+  - component: {fileID: 1609920266}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -755,6 +730,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1609920266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609920261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b273023abc15246a3b83bcae89ecdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flickerTime: 0.85
+  _scoreTextField: {fileID: 330262843}
+  _gameOverTextField: {fileID: 136374705}
+  _livesImages:
+  - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}
+  - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
+  - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
+  - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
+  _livesDisplay: {fileID: 1943062049}
 --- !u!1 &1793537204
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,7 +843,6 @@ GameObject:
   - component: {fileID: 1943062047}
   - component: {fileID: 1943062050}
   - component: {fileID: 1943062049}
-  - component: {fileID: 1943062048}
   m_Layer: 5
   m_Name: Lives_Display_Img
   m_TagString: Untagged
@@ -874,23 +869,6 @@ RectTransform:
   m_AnchoredPosition: {x: 72, y: -37}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1943062048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943062046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cfdc851bfaafda48b181382a88a6b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _livesImages:
-  - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}
-  - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
-  - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
-  - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
 --- !u!114 &1943062049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,6 +982,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6494352417679740508, guid: deadeb3202680974eb87eff9bdf9ba00,
+        type: 3}
+      propertyPath: _spawnTimer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6494352417679740509, guid: deadeb3202680974eb87eff9bdf9ba00,
         type: 3}
       propertyPath: m_LocalPosition.x
