@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float _flickerTime = 0f;
     [SerializeField] private TextMeshProUGUI _scoreTextField = null;
     [SerializeField] private TextMeshProUGUI _gameOverTextField = null;
+    [SerializeField] private TextMeshProUGUI _restartTextField = null;
     [SerializeField] private List<Sprite> _livesImages = null;
     [SerializeField] private Image _livesDisplay = null;
 
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
     private void EnableGameOverDisplay(bool isEnabled)
     {
         _isGameOver = isEnabled;
+        _restartTextField.enabled = true;
         StartCoroutine(FlickerDisplayRoutine());
     }
 
