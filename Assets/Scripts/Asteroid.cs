@@ -25,9 +25,9 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Laser"))
         {
-            Instantiate(_explosionPrefab);
+            Instantiate(_explosionPrefab, gameObject.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
