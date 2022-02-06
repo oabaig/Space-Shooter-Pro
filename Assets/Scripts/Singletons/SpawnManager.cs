@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private GameObject _enemyPrefab = null;
     [SerializeField] private float _spawnTimer = 5f;
+    [SerializeField] private float _startSpawningDelay = 3.0f;
     [SerializeField] private GameObject _enemyContainer = null;
     [SerializeField] private GameObject _powerUpContainter = null;
     [SerializeField] private List<GameObject> _powerups = null;
@@ -38,7 +39,11 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         _canSpawnEnemies = true;
-        _canSpawnPowerups = true;
+        _canSpawnPowerups = true; 
+    }
+
+    public void StartSpawning()
+    {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
@@ -46,6 +51,8 @@ public class SpawnManager : MonoBehaviour
     // spawn game objects every 5 seconds
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(_startSpawningDelay);
+
         while (_canSpawnEnemies)
         {
             if (_enemyPrefab)
@@ -61,6 +68,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        yield return new WaitForSeconds(_startSpawningDelay);
+
         while (_canSpawnPowerups)
         {
             if (_powerups.Count > 0)
