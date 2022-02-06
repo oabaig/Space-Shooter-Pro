@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab = null;
     [SerializeField] private GameObject _tripleLaserPrefab = null;
 
+    [SerializeField] private GameObject _leftEngineDamage = null;
+    [SerializeField] private GameObject _rightEngineDamage = null;
+
     [SerializeField] private float _fireRate = 0.5f;
     private float _laserSpawnOffset = 1.06f;
     private float _canFire = -1f;
@@ -122,6 +125,9 @@ public class Player : MonoBehaviour
 
         _numberLives--;
         _UpdateLivesEvent.Invoke(_numberLives);
+
+        if      (_numberLives == 2) _leftEngineDamage.SetActive(true);
+        else if (_numberLives == 1) _rightEngineDamage.SetActive(true);
 
         if(_numberLives < 1)
         {
