@@ -38,7 +38,11 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         _canSpawnEnemies = true;
-        _canSpawnPowerups = true;
+        _canSpawnPowerups = true; 
+    }
+
+    public void StartSpawning()
+    {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
