@@ -8,6 +8,8 @@ public class ShieldPowerup : Powerup
     {
         if (collision.gameObject.tag == "Player")
         {
+            base.PlayPowerUpSound();
+
             collision.gameObject.GetComponent<Player>().SetShieldPowerup();
             Destroy(this.gameObject);
         }

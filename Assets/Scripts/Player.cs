@@ -119,8 +119,7 @@ public class Player : MonoBehaviour
         spawnPosition.y += _laserSpawnOffset;
         Instantiate(laser, spawnPosition, Quaternion.identity);
 
-        _audioSource.clip = _laserFireAudio;
-        _audioSource.Play();
+        _audioSource.PlayOneShot(_laserFireAudio);
     }
 
     /// <summary>

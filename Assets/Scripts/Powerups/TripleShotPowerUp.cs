@@ -8,6 +8,8 @@ public class TripleShotPowerUp : Powerup
     {
         if (collision.gameObject.tag == "Player")
         {
+            base.PlayPowerUpSound();
+
             collision.gameObject.GetComponent<Player>().SetTripleShotActive();
             Destroy(this.gameObject);
         }

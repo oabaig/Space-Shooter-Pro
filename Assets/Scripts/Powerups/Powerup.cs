@@ -8,6 +8,7 @@ public class Powerup : MonoBehaviour
     /// Speed of current powerup
     /// </summary>
     [SerializeField] private float _speed = 3f;
+    [SerializeField] private AudioClip _powerupAudio = null;
 
     private float _screenBottom = ScreenBounds.GetScreenBottom();
 
@@ -25,6 +26,10 @@ public class Powerup : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        
+
+    }
+
+    protected void PlayPowerUpSound() {
+       AudioSource.PlayClipAtPoint(_powerupAudio, new Vector3(0,0,-10));
     }
 }
