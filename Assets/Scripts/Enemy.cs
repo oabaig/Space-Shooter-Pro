@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 4f;
+    [SerializeField] private GameObject _explosionPrefab = null;
 
     private float _screenBottom = ScreenBounds.GetScreenBottom();
     private float _screenTop = ScreenBounds.GetScreenTop();
@@ -57,6 +58,8 @@ public class Enemy : MonoBehaviour
 
             _EventManager.RemovePointsAddedInvoker(this);
 
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
@@ -69,6 +72,8 @@ public class Enemy : MonoBehaviour
                 other.GetComponent<Player>().Damage();
                 Debug.Log(gameObject.name + ": Dealt Damage to Player");
             }
+
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

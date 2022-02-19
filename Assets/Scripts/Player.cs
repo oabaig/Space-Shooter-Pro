@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
     // engine damage
     [SerializeField] private GameObject _leftEngineDamage = null;
     [SerializeField] private GameObject _rightEngineDamage = null;
+    [SerializeField] private GameObject _explosionprefab = null;
 
-    // audio sources
+    // audio
     [SerializeField] private AudioClip _laserFireAudio = null;
     private AudioSource _audioSource = null;
 
@@ -145,6 +146,8 @@ public class Player : MonoBehaviour
             _SpawnManager.OnPlayerDeath();
 
             _EventManager.RemoveUpdateLivesInvoker(this);
+
+            Instantiate(_explosionprefab, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }
