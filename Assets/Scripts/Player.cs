@@ -7,11 +7,17 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
 
+    // lasers
     [SerializeField] private GameObject _laserPrefab = null;
     [SerializeField] private GameObject _tripleLaserPrefab = null;
 
+    // engine damage
     [SerializeField] private GameObject _leftEngineDamage = null;
     [SerializeField] private GameObject _rightEngineDamage = null;
+
+    // audio sources
+    [SerializeField] private AudioClip _laserFireAudio = null;
+    private AudioSource _audioSource = null;
 
     [SerializeField] private float _fireRate = 0.5f;
     private float _laserSpawnOffset = 1.06f;
@@ -44,6 +50,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _audioSource = gameObject.GetComponent<AudioSource>();
+
         transform.position = new Vector3(0, 0, 0);
 
         _SpawnManager = SpawnManager.instance;
@@ -109,6 +117,9 @@ public class Player : MonoBehaviour
         Vector3 spawnPosition = transform.position;
         spawnPosition.y += _laserSpawnOffset;
         Instantiate(laser, spawnPosition, Quaternion.identity);
+
+        _audioSource.clip = _laserFireAudio;
+        _audioSource.Play();
     }
 
     /// <summary>
