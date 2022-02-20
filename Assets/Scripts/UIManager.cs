@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateScoreText(int score)
     {
+        Debug.Log("Update Score Text Invoked");
         _currentScore += score;
 
         _scoreTextField.text = _scoreText + _currentScore;

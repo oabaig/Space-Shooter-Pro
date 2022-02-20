@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     private EventManager _EventManager;
 
     // Events
-    private UpdateLivesEvent _UpdateLivesEvent;
+    private UpdateLivesEvent _UpdateLivesEvent = new UpdateLivesEvent();
 
     // Start is called before the first frame update
     void Start()
@@ -61,8 +61,6 @@ public class Player : MonoBehaviour
         _canFireTripleShot = false;
         _speedBoostMultiplier = 1;
         _isShieldActive = false;
-
-        _UpdateLivesEvent = new UpdateLivesEvent();
 
         _EventManager.AddUpdateLivesInvoker(this);
     }
@@ -137,10 +135,10 @@ public class Player : MonoBehaviour
         _numberLives--;
         _UpdateLivesEvent.Invoke(_numberLives);
 
-        if      (_numberLives == 2) _leftEngineDamage.SetActive(true);
+        if (_numberLives == 2) _leftEngineDamage.SetActive(true);
         else if (_numberLives == 1) _rightEngineDamage.SetActive(true);
 
-        if(_numberLives < 1)
+        if (_numberLives < 1)
         {
             _SpawnManager.OnPlayerDeath();
 

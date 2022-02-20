@@ -17,13 +17,11 @@ public class Enemy : MonoBehaviour
     private EventManager _EventManager;
 
     // Events
-    private PointsAddedEvent _PointsAddedEvent;
+    private PointsAddedEvent _PointsAddedEvent = new PointsAddedEvent();
 
     private void Start()
     {
         _EventManager = EventManager.instance;
-
-        _PointsAddedEvent = new PointsAddedEvent();
 
         _EventManager.AddPointsAddedInvoker(this);
     }
