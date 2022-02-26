@@ -34,6 +34,11 @@ public class GameMaster : MonoBehaviour
         {
             CheckRestartLevelKey();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     private void CheckRestartLevelKey()
