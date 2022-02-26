@@ -5,8 +5,14 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
+    // properties
     [SerializeField] private float _speed = 4f;
+    [SerializeField] private float _minShootTime = 0.5f;
+    [SerializeField] private float _maxShootTime = 1.5f;
+
+    // prefabs
     [SerializeField] private GameObject _explosionPrefab = null;
+    [SerializeField] private GameObject _laserPrefab = null;
 
     private float _screenBottom = ScreenBounds.GetScreenBottom();
     private float _screenTop = ScreenBounds.GetScreenTop();
@@ -24,12 +30,22 @@ public class Enemy : MonoBehaviour
         _EventManager = EventManager.instance;
 
         _EventManager.AddPointsAddedInvoker(this);
+
+        StartCoroutine(FireLaser());
     }
 
     // Update is called once per frame
     void Update()
     {
         CalculateMovement();
+    }
+
+    private IEnumerator FireLaser()
+    {
+        float shootTimer = Random.Range(_minShootTime, _maxShootTime);
+        yield return new WaitForSeconds(shootTimer);
+
+        GameObject laserInstance = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
     }
 
     /// <summary>
@@ -50,7 +66,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Laser")
+        if (other.tag == "Laser")
         {
             _PointsAddedEvent.Invoke(10);
 
@@ -62,10 +78,10 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
-            if(player != null)
+            if (player != null)
             {
                 other.GetComponent<Player>().Damage();
                 Debug.Log(gameObject.name + ": Dealt Damage to Player");

@@ -10,10 +10,17 @@ public class laser : MonoBehaviour
 
     private Transform _parentTransform;
 
+    private bool _isEnemyLaser;
+
     private void Start()
     {
         _parentTransform = transform.parent;
+
+        if (gameObject.name == "Enemy_Laser")
+            _isEnemyLaser = true;
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -26,15 +33,31 @@ public class laser : MonoBehaviour
     /// </summary>
     private void CalculateMovement()
     {
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
-
-        if (transform.position.y > _maxDistance)
+        if (_isEnemyLaser)
         {
-            if (_parentTransform)
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+
+            if (transform.position.y > _maxDistance)
             {
-                Destroy(_parentTransform.gameObject);
+                if (_parentTransform)
+                {
+                    Destroy(_parentTransform.gameObject);
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
+        }
+        else
+        {
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+
+            if (transform.position.y > _maxDistance)
+            {
+                if (_parentTransform)
+                {
+                    Destroy(_parentTransform.gameObject);
+                }
+                Destroy(gameObject);
+            }
         }
     }
 }
