@@ -98,10 +98,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 4
   _minShootTime: 0.5
-  _maxShootTime: 1.5
+  _maxShootTime: 1
   _explosionPrefab: {fileID: 8256051588125096188, guid: a5690ad9342cb304e8150c0f402fc5d4,
     type: 3}
-  _laserPrefab: {fileID: 1823080932310046579, guid: aca0577f4eee2944d8462cf68656dc89,
+  _laserPrefab: {fileID: 3001019869657633767, guid: 2cf6bab44237bc2479cfb4e09aedc4de,
     type: 3}
 --- !u!50 &1982756068373179574
 Rigidbody2D:

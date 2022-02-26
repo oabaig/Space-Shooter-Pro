@@ -7,17 +7,17 @@ public class laser : MonoBehaviour
     [SerializeField] private float _speed = 8f;
 
     private float _maxDistance = 7f;
+    private float _minDistance = -5.8f;
 
     private Transform _parentTransform;
 
-    private bool _isEnemyLaser;
+    protected bool _isEnemyLaser;
 
-    private void Start()
+    protected void Start()
     {
         _parentTransform = transform.parent;
 
-        if (gameObject.name == "Enemy_Laser")
-            _isEnemyLaser = true;
+        _isEnemyLaser = false;
 
     }
 
@@ -35,9 +35,9 @@ public class laser : MonoBehaviour
     {
         if (_isEnemyLaser)
         {
-            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-            if (transform.position.y > _maxDistance)
+            if (transform.position.y < _minDistance)
             {
                 if (_parentTransform)
                 {

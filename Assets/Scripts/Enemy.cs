@@ -25,12 +25,16 @@ public class Enemy : MonoBehaviour
     // Events
     private PointsAddedEvent _PointsAddedEvent = new PointsAddedEvent();
 
+    private float _laserSpawnOffset = -1.06f;
+    private bool _canFire;
+
     private void Start()
     {
         _EventManager = EventManager.instance;
 
         _EventManager.AddPointsAddedInvoker(this);
 
+        _canFire = true;
         StartCoroutine(FireLaser());
     }
 
@@ -42,10 +46,15 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator FireLaser()
     {
-        float shootTimer = Random.Range(_minShootTime, _maxShootTime);
-        yield return new WaitForSeconds(shootTimer);
+        while (_canFire)
+        {
+            float shootTimer = Random.Range(_minShootTime, _maxShootTime);
+            yield return new WaitForSeconds(shootTimer);
 
-        GameObject laserInstance = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Vector3 spawnPosition = transform.position;
+            spawnPosition.y += _laserSpawnOffset;
+            GameObject laserInstance = Instantiate(_laserPrefab, spawnPosition, Quaternion.identity);
+        }
     }
 
     /// <summary>
@@ -74,6 +83,7 @@ public class Enemy : MonoBehaviour
 
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
+            _canFire = false;
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
@@ -87,6 +97,7 @@ public class Enemy : MonoBehaviour
                 Debug.Log(gameObject.name + ": Dealt Damage to Player");
             }
 
+            _canFire = false;
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
