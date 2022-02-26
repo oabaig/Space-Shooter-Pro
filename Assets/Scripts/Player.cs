@@ -83,6 +83,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy_Laser")
+        {
+            Destroy(other.gameObject);
+            UpdateNumberLives(-1);
+        }
+    }
+
     /// <summary>
     /// Calculates movement based on user input.
     /// </summary>
@@ -120,19 +129,9 @@ public class Player : MonoBehaviour
         _audioSource.PlayOneShot(_laserFireAudio);
     }
 
-    /// <summary>
-    /// Deals damage to player.
-    /// </summary>
-    public void Damage()
+    private void UpdateNumberLives(int number)
     {
-        if (_isShieldActive)
-        {
-            _isShieldActive = false;
-            _playerShields.SetActive(false);
-            return;
-        }
-
-        _numberLives--;
+        _numberLives += number;
         _UpdateLivesEvent.Invoke(_numberLives);
 
         if (_numberLives == 2) _leftEngineDamage.SetActive(true);
@@ -148,6 +147,21 @@ public class Player : MonoBehaviour
 
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Deals damage to player.
+    /// </summary>
+    public void Damage()
+    {
+        if (_isShieldActive)
+        {
+            _isShieldActive = false;
+            _playerShields.SetActive(false);
+            return;
+        }
+
+        UpdateNumberLives(-1);
     }
 
     /// <summary>
