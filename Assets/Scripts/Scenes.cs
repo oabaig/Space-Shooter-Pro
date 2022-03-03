@@ -5,5 +5,6 @@ using UnityEngine;
 public enum Scenes
 {
     MainMenu,
-    Game
+    SinglePlayer,
+    Multiplayer
 }
