@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -48,12 +48,25 @@ public class Player : MonoBehaviour
     // Events
     private UpdateLivesEvent _UpdateLivesEvent = new UpdateLivesEvent();
 
+    private bool _isSinglePlayer;
+    private int _playerNum;
+
     // Start is called before the first frame update
     void Start()
     {
+        Scene scene = SceneManager.GetActiveScene();
+        _isSinglePlayer = scene.buildIndex == (int)Scenes.SinglePlayer ? true : false;
+
         _audioSource = gameObject.GetComponent<AudioSource>();
 
-        transform.position = new Vector3(0, 0, 0);
+        if (_isSinglePlayer)
+        {
+            transform.position = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            _playerNum = gameObject.name == "Player_1" ? 1 : 2;
+        }
 
         _SpawnManager = SpawnManager.instance;
         _EventManager = EventManager.instance;

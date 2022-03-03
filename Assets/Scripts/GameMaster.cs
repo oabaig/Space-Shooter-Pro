@@ -46,7 +46,7 @@ public class GameMaster : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            SceneManager.LoadScene(scene.buildIndex);
         }
     }
 
