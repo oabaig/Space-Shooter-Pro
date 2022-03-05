@@ -22,10 +22,21 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     private bool _isGameOver;
+    private bool _isSinglePlayer;
 
     private void Start()
     {
         _isGameOver = false;
+
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.buildIndex == (int)Scenes.SinglePlayer)
+        {
+            _isSinglePlayer = true;
+        }
+        else
+        {
+            _isSinglePlayer = false;
+        }
     }
 
     private void Update()
@@ -35,10 +46,7 @@ public class GameMaster : MonoBehaviour
             CheckRestartLevelKey();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        CheckApplicationQuit();
     }
 
     private void CheckRestartLevelKey()
@@ -50,8 +58,21 @@ public class GameMaster : MonoBehaviour
         }
     }
 
+    private void CheckApplicationQuit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     public void SetIsGameOver(bool isGameOver)
     {
         _isGameOver = isGameOver;
+    }
+
+    public bool GetIsSinglePlayer()
+    {
+        return _isSinglePlayer;
     }
 }

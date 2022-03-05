@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -44,32 +43,31 @@ public class Player : MonoBehaviour
     // Singletons
     private SpawnManager _SpawnManager;
     private EventManager _EventManager;
+    private GameMaster _GameMaster;
 
     // Events
     private UpdateLivesEvent _UpdateLivesEvent = new UpdateLivesEvent();
 
     private bool _isSinglePlayer;
-    private int _playerNum;
+    [SerializeField] private int _playerNum;
 
     // Start is called before the first frame update
     void Start()
     {
-        Scene scene = SceneManager.GetActiveScene();
-        _isSinglePlayer = scene.buildIndex == (int)Scenes.SinglePlayer ? true : false;
+        _SpawnManager = SpawnManager.instance;
+        _EventManager = EventManager.instance;
+        _GameMaster = GameMaster.instance;
 
-        _audioSource = gameObject.GetComponent<AudioSource>();
+        _isSinglePlayer = _GameMaster.GetIsSinglePlayer();
 
         if (_isSinglePlayer)
         {
             transform.position = new Vector3(0, 0, 0);
         }
-        else
-        {
-            _playerNum = gameObject.name == "Player_1" ? 1 : 2;
-        }
 
-        _SpawnManager = SpawnManager.instance;
-        _EventManager = EventManager.instance;
+        _audioSource = gameObject.GetComponent<AudioSource>();
+
+
 
         _canFireTripleShot = false;
         _speedBoostMultiplier = 1;
