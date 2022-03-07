@@ -51,6 +51,10 @@ public class Player : MonoBehaviour
     private bool _isSinglePlayer;
     [SerializeField] private int _playerNum;
 
+    private KeyCode _shootKey;
+    private string _horizontalMovement;
+    private string _verticalMovement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,9 +69,20 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(0, 0, 0);
         }
 
+        if (_playerNum == 1)
+        {
+            _shootKey = KeyCode.Space;
+            _horizontalMovement = "Horizontal";
+            _verticalMovement = "Vertical";
+        }
+        else
+        {
+            _shootKey = KeyCode.Keypad0;
+            _horizontalMovement = "HorizontalAlt";
+            _verticalMovement = "VerticalAlt";
+        }
+
         _audioSource = gameObject.GetComponent<AudioSource>();
-
-
 
         _canFireTripleShot = false;
         _speedBoostMultiplier = 1;
@@ -81,7 +96,7 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(_shootKey) && Time.time > _canFire)
         {
             if (_canFireTripleShot)
             {
@@ -108,8 +123,8 @@ public class Player : MonoBehaviour
     /// </summary>
     private void CalculateMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis(_horizontalMovement);
+        float verticalInput = Input.GetAxis(_verticalMovement);
 
         Vector3 newPosition = new Vector3(horizontalInput, verticalInput) * _speed * Time.deltaTime * _speedBoostMultiplier;
         transform.Translate(newPosition);
