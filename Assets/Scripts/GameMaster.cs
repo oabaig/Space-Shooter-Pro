@@ -32,6 +32,7 @@ public class GameMaster : MonoBehaviour
         if (scene.buildIndex == (int)Scenes.SinglePlayer)
         {
             _isSinglePlayer = true;
+
         }
         else
         {
@@ -66,13 +67,14 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public void SetIsGameOver(bool isGameOver)
+    public void OnGameOver()
     {
-        _isGameOver = isGameOver;
+        _isGameOver = true;
     }
 
     public bool GetIsSinglePlayer()
     {
         return _isSinglePlayer;
     }
+
 }

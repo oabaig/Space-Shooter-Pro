@@ -11,23 +11,31 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _gameOverTextField = null;
     [SerializeField] private TextMeshProUGUI _restartTextField = null;
     [SerializeField] private List<Sprite> _livesImages = null;
-    [SerializeField] private Image _livesDisplay = null;
-
+    [SerializeField] private List<Image> _livesDisplay = null;
 
     private const string _scoreText = "Score: ";
     private int _currentScore;
     private bool _isGameOver;
+    private bool _isSinglePlayer;
+    private bool _isPlayerOneDead;
+    private bool _isPlayerTwoDead;
 
     // Singletons
     private EventManager _EventManager;
     private GameMaster _GameMaster;
+    private SpawnManager _SpawnManager;
 
     // Start is called before the first frame update
     private void Start()
     {
         _EventManager = EventManager.instance;
         _GameMaster = GameMaster.instance;
+        _SpawnManager = SpawnManager.instance;
 
+        _isSinglePlayer = _GameMaster.GetIsSinglePlayer();
+
+        _isPlayerOneDead = false;
+        _isPlayerTwoDead = false;
         _isGameOver = false;
         _currentScore = 0;
         UpdateScoreText(_currentScore);
@@ -51,16 +59,30 @@ public class UIManager : MonoBehaviour
         StartCoroutine(FlickerDisplayRoutine());
     }
 
-    private void UpdateNumberLivesDisplay(int numLives)
+    private void UpdateNumberLivesDisplay(int numLives, int playerNum)
     {
-        _livesDisplay.sprite = _livesImages[numLives];
+        int playerIndex = playerNum - 1;
+
+        _livesDisplay[playerIndex].sprite = _livesImages[numLives];
 
         if (numLives <= 0)
         {
+            if (playerNum == 1)
+            {
+                _isPlayerOneDead = true;
+            }
+            else
+            {
+                _isPlayerTwoDead = true;
+            }
+        }
+
+        if (_isPlayerOneDead && _isPlayerTwoDead)
+        {
+            _SpawnManager.OnPlayerDeath();
             _isGameOver = true;
             EnableGameOverDisplay(_isGameOver);
-
-            _GameMaster.SetIsGameOver(_isGameOver);
+            _GameMaster.OnGameOver();
         }
     }
 

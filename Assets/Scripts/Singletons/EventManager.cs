@@ -25,7 +25,7 @@ public class EventManager : MonoBehaviour
     List<UnityAction<int>> _pointsAddedListeners = new List<UnityAction<int>>();
 
     List<Player> _updateLivesInvokers = new List<Player>();
-    List<UnityAction<int>> _updateLivesListeners = new List<UnityAction<int>>();
+    List<UnityAction<int, int>> _updateLivesListeners = new List<UnityAction<int, int>>();
 
     #region Points Added Event
     public void AddPointsAddedInvoker(Enemy invoker)
@@ -70,13 +70,13 @@ public class EventManager : MonoBehaviour
     {
         _updateLivesInvokers.Add(invoker);
         Debug.Log("Add Update Lives Invoker Method Called");
-        foreach (UnityAction<int> listener in _updateLivesListeners)
+        foreach (UnityAction<int, int> listener in _updateLivesListeners)
         {
             invoker.AddUpdateLivesEventListener(listener);
         }
     }
 
-    public void AddUpdateLivesListener(UnityAction<int> listener)
+    public void AddUpdateLivesListener(UnityAction<int, int> listener)
     {
         _updateLivesListeners.Add(listener);
         foreach (Player invoker in _updateLivesInvokers)
@@ -88,13 +88,13 @@ public class EventManager : MonoBehaviour
     public void RemoveUpdateLivesInvoker(Player invoker)
     {
         _updateLivesInvokers.Remove(invoker);
-        foreach (UnityAction<int> listener in _updateLivesListeners)
+        foreach (UnityAction<int, int> listener in _updateLivesListeners)
         {
             invoker.RemoveUpdateLivesEventListener(listener);
         }
     }
 
-    public void RemoveUpdateLivesListener(UnityAction<int> listener)
+    public void RemoveUpdateLivesListener(UnityAction<int, int> listener)
     {
         _updateLivesListeners.Remove(listener);
         foreach (Player invoker in _updateLivesInvokers)

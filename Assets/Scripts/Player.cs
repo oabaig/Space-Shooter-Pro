@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private UpdateLivesEvent _UpdateLivesEvent = new UpdateLivesEvent();
 
     private bool _isSinglePlayer;
-    [SerializeField] private int _playerNum;
+    [SerializeField] private int _playerNum = 1;
 
     private KeyCode _shootKey;
     private string _horizontalMovement;
@@ -158,19 +158,16 @@ public class Player : MonoBehaviour
     private void UpdateNumberLives(int number)
     {
         _numberLives += number;
-        _UpdateLivesEvent.Invoke(_numberLives);
+        _UpdateLivesEvent.Invoke(_numberLives, _playerNum);
 
         if (_numberLives == 2) _leftEngineDamage.SetActive(true);
         else if (_numberLives == 1) _rightEngineDamage.SetActive(true);
 
         if (_numberLives < 1)
         {
-            _SpawnManager.OnPlayerDeath();
-
             _EventManager.RemoveUpdateLivesInvoker(this);
 
             Instantiate(_explosionprefab, transform.position, Quaternion.identity);
-
             Destroy(gameObject);
         }
     }
@@ -230,12 +227,12 @@ public class Player : MonoBehaviour
     #region Events
 
     #region Update Lives Event
-    public void AddUpdateLivesEventListener(UnityAction<int> listener)
+    public void AddUpdateLivesEventListener(UnityAction<int, int> listener)
     {
         _UpdateLivesEvent.AddListener(listener);
     }
 
-    public void RemoveUpdateLivesEventListener(UnityAction<int> listener)
+    public void RemoveUpdateLivesEventListener(UnityAction<int, int> listener)
     {
         _UpdateLivesEvent.RemoveListener(listener);
     }
