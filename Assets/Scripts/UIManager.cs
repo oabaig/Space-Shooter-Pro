@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
         _isSinglePlayer = _GameMaster.GetIsSinglePlayer();
 
         _isPlayerOneDead = false;
-        _isPlayerTwoDead = false;
+        _isPlayerTwoDead = _isSinglePlayer ? true : false;
         _isGameOver = false;
         _currentScore = 0;
         UpdateScoreText(_currentScore);
